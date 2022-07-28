@@ -81,6 +81,8 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+## Avoid displaying any sensitive data in the repository view
+affordable_housing_investigation.ipynb
 
 # IPython
 profile_default/
