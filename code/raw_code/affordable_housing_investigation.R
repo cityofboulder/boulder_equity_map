@@ -64,8 +64,7 @@ added_geo$LAT_LONG__LONGITUDE__S <- added_geo$Longitude
 
 table(added_geo[is.na(added_geo$LAT_LONG__LATITUDE__S) == TRUE,]$ADDRESS)
 
-added_geo$LAT_LONG__LATITUDE__S[added_geo$STREET_ADDRESS__C == "3705 Canfield St"] <- 40.04028
-added_geo$LAT_LONG__LONGITUDE__S[added_geo$STREET_ADDRESS__C == "3705 Canfield St"] <- -105.24387
+
 
 
 # Drop the remaining NAs
