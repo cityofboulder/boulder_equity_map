@@ -66,7 +66,9 @@ acs5_block_groups <- get_acs(
   # geometry = TRUE
 )
 # Subset for only Boulder block groups
-boulder_block_group_df <- acs5_block_groups[acs5_block_groups$NAME %in% boulder_blocks,]
+boulder_block_group_df <- acs5_block_groups[acs5_block_groups$NAME %in% 
+                                              boulder_blocks,
+                                            ]
 
 
 # Get rid of estimates that are missing
@@ -90,7 +92,8 @@ block_group_variable_moe_ratios <-  boulder_moe %>%
   summarize(mean_moe_ratio = mean(moe_ratio))
 
 block_group_variable_moe_ratios <- block_group_variable_moe_ratios[order(
-                                        block_group_variable_moe_ratios$mean_moe_ratio),]
+                                        block_group_variable_moe_ratios$mean_moe_ratio),
+                                        ]
 
 smallest_moe_ratio <-  block_group_variable_moe_ratios[block_group_variable_moe_ratios$mean_moe_ratio < 1,]
 
@@ -107,17 +110,23 @@ concept_list <- as.list(unique(variable_candidates$concept))
 ########################################################
 
 concept_list <-  c("RACE",
-                   "MEDIAN AGE BY SEX",
-                   "SEX BY AGE",
+                   "TOTAL POPULATION",
+                   # "MEDIAN AGE BY SEX",
+                   # "SEX BY AGE",
                    "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
-                   "MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2020 INFLATION-ADJUSTED DOLLARS",
-                   "SUPPLEMENTAL SECURITY INCOME (SSI) IN THE PAST 12 MONTHS FOR HOUSEHOLDS",
+                   "MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2020 INFLATION-ADJUSTED DOLLARS)",
+                   # "SUPPLEMENTAL SECURITY INCOME (SSI) IN THE PAST 12 MONTHS FOR HOUSEHOLDS",
                    "PUBLIC ASSISTANCE INCOME IN THE PAST 12 MONTHS FOR HOUSEHOLDS",
                    "PUBLIC ASSISTANCE INCOME OR FOOD STAMPS/SNAP IN THE PAST 12 MONTHS FOR HOUSEHOLDS",
-                   "INTERNET SUBSCRIPTIONS IN HOUSEHOLD",
-                   "COMPUTERS IN HOUSEHOLD",
-                   "CITIZEN, VOTING-AGE POPULATION BY AGE",
-                   "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS"
+                   # "INTERNET SUBSCRIPTIONS IN HOUSEHOLD",
+                   # "COMPUTERS IN HOUSEHOLD",
+                   # "CITIZEN, VOTING-AGE POPULATION BY AGE",
+                   "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+                   "DETAILED RACE",
+                   "TENURE",
+                   "HISPANIC OR LATINO ORIGIN",
+                   "HISPANIC OR LATINO ORIGIN BY RACE",
+                   "MONTHLY HOUSING COSTS"
                    )
 
 

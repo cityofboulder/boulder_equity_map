@@ -98,10 +98,10 @@ voters <- voters[voters$STATUS == "Active",]
 na_count  <- sapply(voters, function(y) sum(length(which(is.na(y)))))
 na_count  <-  data.frame(na_count)
 
-# Still over 7,000 addresses missing coordinates
-
-voters <- voters[!is.na(voters$Latitude),]
+# Still over 5,800 addresses missing coordinates
 missing_geo <-  voters[is.na(voters$Latitude),]
+voters <- voters[!is.na(voters$Latitude),]
+
 
 # Try to rework the addresses and see what we can clean up this way.
 missing_geo <- missing_geo %>%
@@ -115,11 +115,11 @@ missing_geo <- missing_geo %>%
 
 added_geo  <- missing_geo %>%
   geocode(ADDRESS,
-          method = "osm",
+          method = "geocodio",
           lat = Latitude,
           long = Longitude
   )
-
+#
 added_geo <- added_geo %>%
   mutate(Latitude = Latitude...21) %>%
   mutate(Longitude = Longitude...22)
@@ -143,8 +143,8 @@ na_count  <-  data.frame(na_count)
 res_hall_rows <- added_geo[added_geo$ADDRESS %like% " HALL ", ]
 
 # That only accounts for 153 of them.
+voters <- rbind(voters, added_geo)
 
-# If we filter out all of the inactive voter records, everything is geocoded.
 
 voters <- voters %>%
   mutate(age = 2022 - YOB)
@@ -182,4 +182,70 @@ voters$Latitude[(voters$STREET_NAME == "CHESTNUT") &
 # Turn it into a geo data frame with a geometry column, set to EPSG:4326 projection (for now)
 geo_df = st_as_sf(voters, coords=c("Longitude", "Latitude"), crs=4326)
 
+
+tm_basemap("OpenStreetMap.France") +
+  tm_shape(geo_df) +
+  tm_dots(col = "age")  
+  
 ggplot() + geom_sf(data = geo_df, aes(fill = age))
+
+write.csv(voters, "C://data//voter_records//geocoded_voters_2.csv")
+
+voters  <- read.csv(
+  file = "C://data//voter_records//geocoded_voters_2.csv",
+)
+##########################################
+############ Merge Geometry ##############
+##########################################
+
+# Get geometry
+geo <- get_acs(
+  geography = "block group",
+  variables = 'B02001_001',
+  state = "CO",
+  county = "Boulder",
+  year = 2020,
+  survey = "acs5",
+  geometry = TRUE
+)
+geo <- geo[,names(geo) %in% c("GEOID", "geometry")]
+
+geo_corr <- read.csv("..//..//data//raw_data//geocorr_boulder_city.csv",
+                     colClasses=c("tract"="character", 
+                                  "block_group"="character"
+                     )
+)
+
+geo_corr  <- mutate(
+  geo_corr,
+  block = paste("Block Group ", 
+                geo_corr$block_group, 
+                ", Census Tract ", 
+                geo_corr$tract, 
+                ", Boulder County, Colorado", 
+                sep = ""
+  )
+)
+bg_list <-  as.list(unique(geo_corr$block))
+
+geo <- geo[geo$NAME %in% bg_list,]
+
+st_crs(geo)
+
+# Turn it into a geo dataframe with a geometry column, set to EPSG:4269 projection (for now)
+geo_voters = st_as_sf(voters, coords=c("Longitude", "Latitude"), crs=4269)
+st_crs(geo_voters)
+
+
+ggplot() +
+  geom_sf(data = geo, aes(fill = estimate)) +
+  geom_sf(data = geo_voters)
+
+
+# Filter out points outside the polygons
+
+points_sf_joined <- st_join(geo, geo_voters) %>% # Spatial join for intersection
+  filter(!is.na(GEOID))
+
+
+# Can now group by GEOID and get the voter ages, counts by sex, etc.
