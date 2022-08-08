@@ -37,7 +37,7 @@ race_var <- c("B02001_001", # Total
               "B02001_006", # Native Hawaiian or PI
               "B02001_007", # Other
               # "B02001_008", # 2+
-              "B02001_009", # 2+ incl. Other
+              "B02001_009" # 2+ incl. Other
               # "B02001_010" # 2+ excluding Other, 3+
               )
 
@@ -242,7 +242,7 @@ Normalize <- function(x) {
 
 norm_acs <- full_df
 
-col_list <- as.list(names(select(full_df, c(3:17))))
+col_list <- as.list(names(select(full_df, c(3:15))))
 
 # We have some missing values, which won't allow us to normalize
 na_count  <- sapply(full_df, function(y) sum(length(which(is.na(y)))))
@@ -253,20 +253,20 @@ full_df$GEOID[is.na(full_df$med_income) == TRUE]
 
 # The missing values are in tracts mainly in the university area. Don't want to 
 # set to zero, probably want to mask any effect here. Mean imputation?
-full_df$med_income[is.na(full_df$med_income)] <- mean(full_df$med_income, na.rm = TRUE) 
+norm_acs$med_income[is.na(norm_acs$med_income)] <- mean(norm_acs$med_income, na.rm = TRUE) 
 
 # Normalize columns
-norm_acs[3:17] <- lapply(norm_acs[3:17], function(x) Normalize(x))
+norm_acs[3:15] <- lapply(norm_acs[3:15], function(x) Normalize(x))
 
 
 ############################################
 ######### 5. Examine Correlation ###########
 ############################################
 
-pairs(norm_acs[,3:17])
+pairs(norm_acs[,3:15])
 
 
-z <- as.matrix(norm_acs[3:17])
+z <- as.matrix(norm_acs[3:15])
 pairs( z, panel=function(x,y){
   points(x,y)
   abline(lm(y~x), col='red')
