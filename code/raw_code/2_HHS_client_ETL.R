@@ -79,7 +79,7 @@ hs_geo <- get_acs(
 )
 
 hs_geo <- hs_geo[,names(hs_geo) %in% c("estimate",
-                                       "GEOID", 
+                                       "GEOID",
                                        "geometry"
                                        )
                  ]
@@ -113,7 +113,7 @@ ggplot() +
 hs_by_bg <- points_sf_joined %>%
   group_by(GEOID, estimate) %>%
   summarise(num_units = n()) %>%
-  mutate(perc_hs_aid = num_units / estimate * 100)
+  mutate(perc_hs_aid = num_units / estimate)
 
 # bg with GEOID 080130125113 estimates that there are zero households in the bg.
 # Which one is this? CU.
@@ -122,7 +122,7 @@ weird_bg <- hs_by_bg[hs_by_bg$GEOID == "080130125113",]
 
 tmap_mode("view")
 
-# Percent White map
+
 tm_basemap("OpenStreetMap.France") +
   tm_shape(weird_bg) + 
   tm_polygons(col = "num_units",
@@ -130,7 +130,7 @@ tm_basemap("OpenStreetMap.France") +
               n = 7,
               alpha = 0.7,
               palette = "Purples",
-              title = "2020 ACS") + 
+              title = "HHS") + 
   tm_layout(title = "Households",
             frame = FALSE,
             legend.outside = TRUE)
@@ -148,7 +148,16 @@ tm_basemap("OpenStreetMap.France") +
               n = 7,
               alpha = 0.7,
               palette = "Purples",
-              title = "2020 ACS") + 
+              title = "HHS") + 
   tm_layout(title = "Households",
             frame = FALSE,
             legend.outside = TRUE)
+
+# No need to normalize, as this is a percent value, it's already between 0 and 1.
+hs_by_bg <- hs_by_bg %>%
+  st_drop_geometry()
+
+hs_by_bg <- hs_by_bg[, names(hs_by_bg) %in% c("GEOID", "perc_hs_aid")]
+
+write.csv(hs_by_bg, "..//..//data//tidy_data//normalized_hhs_client_vars.csv",
+          row.names = FALSE)

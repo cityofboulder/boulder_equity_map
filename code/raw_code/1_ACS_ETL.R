@@ -259,6 +259,20 @@ norm_acs$med_income[is.na(norm_acs$med_income)] <- mean(norm_acs$med_income, na.
 norm_acs[3:15] <- lapply(norm_acs[3:15], function(x) Normalize(x))
 
 
+# Rename columns for clarity
+norm_acs <- norm_acs %>%
+  rename("white" = "B02001_002",
+         "black" = "B02001_003",
+         "ai_ak" = "B02001_004",
+         "asian" = "B02001_005",
+         "nh_pi" = "B02001_006",
+         "other" = "B02001_007",
+         "2_plus_othr" = "B02001_009"
+         )
+
+write.csv(norm_acs, "..//..//data//tidy_data//normalized_acs_vars.csv", 
+          row.names = FALSE)
+
 ############################################
 ######### 5. Examine Correlation ###########
 ############################################

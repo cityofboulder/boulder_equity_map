@@ -68,8 +68,8 @@ table(added_geo[is.na(added_geo$LAT_LONG__LATITUDE__S) == TRUE,]$ADDRESS)
 
 
 # Drop the remaining NAs
-added_geo  <- added_geo %>%
-  filter(is.na(LAT_LONG__LATITUDE__S) == FALSE)
+# added_geo  <- added_geo %>%
+#   filter(is.na(LAT_LONG__LATITUDE__S) == FALSE)
 
 # Drop lat/lon columns and add back to df
 
@@ -80,6 +80,11 @@ print(ncol(added_geo))
 print(nrow(df))
 df  <-  rbind(df, added_geo)
 print(nrow(df))
+
+# Export for manual cleaning of remaining missing addresses
+write.csv(df, "C://data//HHS//affordable_housing_units_geocoded.csv")
+
+df  <- read_csv("C://data//HHS//affordable_housing_units_geocoded_cleaned.csv")
 
 # Turn it into a geo dataframe with a geometry column, set to EPSG:4326 projection (for now)
 geo_df = st_as_sf(df, coords=c("LAT_LONG__LONGITUDE__S", "LAT_LONG__LATITUDE__S"), crs=4326)
