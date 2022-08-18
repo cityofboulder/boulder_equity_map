@@ -1,4 +1,4 @@
-"GEOID","NAME","percent_post_hs","white","black","ai_ak","asian","nh_pi","other","2_plus_othr","percent_bipoc","percent_h_l","med_income","percent_aid","percent_blw_pov"
+"GEOID","NAME","percent_post_hs","white","black","ai_ak","asian","nh_pi","other","2_plus_othr","percent_poc","percent_h_l","med_income","percent_aid","percent_blw_pov"
 "080130121011","Block Group 1, Census Tract 121.01, Boulder County, Colorado",0.832893579595427,0.982586939551412,0,0,0.0208049589731142,0,0,0,0.0174130604485877,0.123638869745003,0.719674744357205,0,0
 "080130121012","Block Group 2, Census Tract 121.01, Boulder County, Colorado",0.927252985884908,0.918460572146406,0,0,0.0519586841135778,0,0,0,0.0815394278535944,0.0881024096385542,0.79398073564076,0,0.0546388852111744
 "080130121013","Block Group 3, Census Tract 121.01, Boulder County, Colorado",0.940318302387268,0.90300825062994,0.050689920957577,0.0388581536261338,0.0413874355223316,0,0.127175197976383,0,0.0969917493700596,0.0923224568138196,0.525992470620156,0,0.0158919644855629

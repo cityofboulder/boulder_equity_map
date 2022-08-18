@@ -92,7 +92,7 @@ race_perc <- race_perc[, names(race_perc) %in% c("GEOID",
                        ]
 
 
-## May need to return to this section to aggregate BIPOC into one element
+## May need to return to this section to aggregate POC into one element
 
 #########################################
 # Isolate and adjust ethnicity variables
@@ -215,7 +215,7 @@ pov_perc <- pov_perc[, names(pov_perc) %in% c("GEOID",
 
 race_wide <- race_perc %>%
   spread(variable, percent) %>%
-  mutate(percent_bipoc = 100 - B02001_002)
+  mutate(percent_poc = 100 - B02001_002)
 
 eth_perc <- eth_perc[,names(eth_perc) != "variable"]
 

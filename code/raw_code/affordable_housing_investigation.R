@@ -86,6 +86,7 @@ write.csv(df, "C://data//HHS//affordable_housing_units_geocoded.csv")
 
 df  <- read_csv("C://data//HHS//affordable_housing_units_geocoded_cleaned.csv")
 
+
 # Turn it into a geo dataframe with a geometry column, set to EPSG:4326 projection (for now)
 geo_df = st_as_sf(df, coords=c("LAT_LONG__LONGITUDE__S", "LAT_LONG__LATITUDE__S"), crs=4326)
 

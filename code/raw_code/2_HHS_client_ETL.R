@@ -153,7 +153,13 @@ tm_basemap("OpenStreetMap.France") +
             frame = FALSE,
             legend.outside = TRUE)
 
-# No need to normalize, as this is a percent value, it's already between 0 and 1.
+# Normalize
+Normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+hs_by_bg$perc_hs_aid <- Normalize(hs_by_bg$perc_hs_aid)
+
 hs_by_bg <- hs_by_bg %>%
   st_drop_geometry()
 

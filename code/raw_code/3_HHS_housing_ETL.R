@@ -36,9 +36,18 @@ df <- df[df$COUNTS_AH_GOALS__C == "Yes"]
 na_count  <- sapply(df, function(y) sum(length(which(is.na(y)))))
 na_count  <-  data.frame(na_count)
 
-rentals <- df[df$'Record Type Name' == "Rental Unit",]
+# There are 418 entries that are single beds. Should probably remove these
+# as they are in shelters which are group quarters.
+table(df$UNIT_TYPE__C)
 
-owned <- df[df$'Record Type Name' == "Homeownership Unit",]
+df <- df[!df$UNIT_TYPE__C %in% c("Bed"),]
+
+# rentals <- df[df$'Record Type Name' == "Rental Unit",]
+# 
+# owned <- df[df$'Record Type Name' == "Homeownership Unit",]
+
+# Possibly multiply houses by residence rate? 2.7? The data has shelter beds
+# listed individually. Use UNIT_TYPE column
 
 # ACS Variables:
 
@@ -73,9 +82,15 @@ st_crs(acs_geo)
 housing <- df[, names(df) %in% c("ID",
                                  "LAT_LONG__LONGITUDE__S",
                                  "LAT_LONG__LATITUDE__S"
-                                 )]
+                                 )
+              ]
 
-housing_geo <- st_as_sf(housing, coords=c("LAT_LONG__LONGITUDE__S", "LAT_LONG__LATITUDE__S"), crs=4269)
+housing_geo <- st_as_sf(housing, 
+                        coords=c("LAT_LONG__LONGITUDE__S", 
+                                 "LAT_LONG__LATITUDE__S"
+                                 ), 
+                        crs=4269
+                        )
 st_crs(housing_geo)
 
 
@@ -117,6 +132,13 @@ tm_basemap("OpenStreetMap.France") +
   tm_layout(title = "Households",
             frame = FALSE,
             legend.outside = TRUE)
+
+# Normalize
+Normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+hs_by_bg$perc_affordable <- Normalize(hs_by_bg$perc_affordable)
 
 
 hs_by_bg <- hs_by_bg %>%
