@@ -104,7 +104,7 @@ This project leverages data from the American Community Survey 5-year estimates 
 <!-- This is an example of how to list things you need to use the software and how to install them. -->
 * R version 4.2.0 or greater
 * RStudio 2022.02.3 Build 492 or greater
-  ```
+
 
 ### Installation
 
@@ -131,10 +131,10 @@ This project leverages data from the American Community Survey 5-year estimates 
    ```
 3. Get free Geocodio API at https://www.geocod.io/docs/#authentication.
 4. Request a Census API key at https://api.census.gov/data/key_signup.html and add it to your environment as follows:
-```sh
-library(tidycensus)
-census_api_key("YOUR API KEY GOES HERE")
-```
+   ```sh
+   library(tidycensus)
+   census_api_key("YOUR API KEY GOES HERE")
+   ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -222,7 +222,7 @@ Project Link: [https://github.com/cityofboulder/boulder_equity_map](https://gith
 [forks-url]: https://github.com/github_username/repo_name/network/members
 [stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge -->
 <!-- [stars-url]: https://github.com/github_username/repo_name/stargazers -->
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/cityofboulder/boulder_equity_map.svg?style=for-the-badge
 [issues-url]: https://github.com/cityofboulder/boulder_equity_map/issues
 [license-shield]: https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg?style=for-the-badge
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
