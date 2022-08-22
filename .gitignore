@@ -179,6 +179,8 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+.RDataTmp
+.RDataTmp1
 
 # pkgdown site
 docs/

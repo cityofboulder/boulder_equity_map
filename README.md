@@ -33,10 +33,10 @@
     <img src="images/boulder-logo.png" alt="Logo" width="160" height="160">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">City of Boulder Racial Equity Map (WIP)</h3>
 
   <p align="center">
-    project_description
+    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: September 2022)
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br /> -->
@@ -82,7 +82,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `email_client`, `email`, `project_title`, `project_description`
+This project leverages data from the American Community Survey 5-year estimates (2016-2020) to develop a racial equity index map for the City of Boulder.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -91,7 +91,6 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 ### Built With
 
 * [R](https://www.r-project.org/)
-* [Python](https://www.python.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -100,32 +99,42 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* Example
-  ```sh
-  npm install npm@latest -g
+<!-- This is an example of how to list things you need to use the software and how to install them. -->
+* R version 4.2.0 or greater
+* RStudio 2022.02.3 Build 492 or greater
   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/cityofboulder/boulder_equity_map
    ```
-3. Install packages
+2. Install packages
    ```sh
    install.packages(tidyverse)
+   install.packages(stringr)
+   install.packages(ggplot2)
+   install.packages(tidygeocoder)
+   install.packages(lubridate)
+   install.packages(sf)
+   install.packages(tidycensus)
+   install.packages(tigris)
+   install.packages(rosm)
+   install.packages(tmap)
+   install.packages(tmaptools)
+   install.packages(OpenStreetMap)
+   install.packages(stringr)
+   install.packages(data.table)
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+3. Get free Geocodio API at https://www.geocod.io/docs/#authentication.
+4. Request a Census API key at https://api.census.gov/data/key_signup.html and add it to your environment as follows:
+```sh
+library(tidycensus)
+census_api_key("YOUR API KEY GOES HERE")
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -133,10 +142,10 @@ This is an example of how to list things you need to use the software and how to
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+<!-- 
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -145,12 +154,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
+<!-- - [ ] Feature 1
 - [ ] Feature 2
 - [ ] Feature 3
-    - [ ] Nested Feature
+    - [ ] Nested Feature -->
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/cityofboulder/boulder_equity_map/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -159,10 +168,10 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
+<!-- Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+ -->
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+<!-- Don't forget to give the project a star! Thanks again! -->
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -188,7 +197,7 @@ Distributed under the Creative Commons Zero v1.0 Universal License. See `LICENSE
 
 Your Name  - email@email_client.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/cityofboulder/boulder_equity_map](https://github.com/cityofboulder/boulder_equity_map)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -214,6 +223,6 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge -->
 <!-- [stars-url]: https://github.com/github_username/repo_name/stargazers -->
 [issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
+[issues-url]: https://github.com/cityofboulder/boulder_equity_map/issues
 [license-shield]: https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg?style=for-the-badge
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
