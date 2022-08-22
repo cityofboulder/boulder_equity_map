@@ -195,7 +195,7 @@ Distributed under the Creative Commons Zero v1.0 Universal License. See `LICENSE
 <!-- CONTACT -->
 ## Contact
 
-Your Name  - email@email_client.com
+Stewart LaPan - lapans@bouldercolorado.gov
 
 Project Link: [https://github.com/cityofboulder/boulder_equity_map](https://github.com/cityofboulder/boulder_equity_map)
 
