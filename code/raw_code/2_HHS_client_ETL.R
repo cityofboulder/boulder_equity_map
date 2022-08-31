@@ -13,7 +13,6 @@ library(tmap)
 # library(basemaps)
 library(tmaptools)
 library(OpenStreetMap)
-library(stringr)
 library(data.table)
 #########################################
 ##### 1. Read in selected variables #####

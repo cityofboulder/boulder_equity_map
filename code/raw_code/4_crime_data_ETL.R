@@ -13,7 +13,6 @@ library(tmap)
 # library(basemaps)
 library(tmaptools)
 library(OpenStreetMap)
-library(stringr)
 library(data.table)
 
 # Spherical geometry (s2) causing errors with zoning data

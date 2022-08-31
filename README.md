@@ -114,20 +114,27 @@ This project leverages data from the American Community Survey 5-year estimates 
    ```
 2. Install packages
    ```sh
-   install.packages(tidyverse)
-   install.packages(stringr)
-   install.packages(ggplot2)
-   install.packages(tidygeocoder)
-   install.packages(lubridate)
-   install.packages(sf)
-   install.packages(tidycensus)
-   install.packages(tigris)
-   install.packages(rosm)
-   install.packages(tmap)
-   install.packages(tmaptools)
-   install.packages(OpenStreetMap)
-   install.packages(stringr)
-   install.packages(data.table)
+   install.packages("tidyverse")
+   install.packages("stringr")
+   install.packages("ggplot2")
+   install.packages("tidygeocoder")
+   install.packages("lubridate")
+   install.packages("sf")
+   install.packages("tidycensus")
+   install.packages("tigris")
+   install.packages("rosm")
+   install.packages("tmap")
+   install.packages("tmaptools")
+   install.packages("OpenStreetMap")
+   install.packages("data.table")
+   # use type argument if working on Windows operating system
+   # install.packages("devtools", type = "win.binary")
+
+   # Load devtools to install nlcor package
+   # library(devtools)
+
+   # install_github("ProcessMiner/nlcor")
+
    ```
 3. Get free Geocodio API at https://www.geocod.io/docs/#authentication.
 4. Request a Census API key at https://api.census.gov/data/key_signup.html and add it to your environment as follows:

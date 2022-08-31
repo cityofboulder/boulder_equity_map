@@ -13,7 +13,6 @@ library(tmap)
 # library(basemaps)
 library(tmaptools)
 library(OpenStreetMap)
-library(stringr)
 library(data.table)
 
 bg_df  <- read_csv("..//..//data//tidy_data//bg-level_candidate_variables_acs5_2020.csv")
