@@ -1,0 +1,6 @@
+"","variable","Pearson Coef","Pearson P.value","Spearman Coef","Spearman P.value"
+"c(variable, correlation_p$estimate, correlation_p$p.value, correlation_s$estimate, correlation_s$p.value)","percent_poc","0.329218188804745","0.00209411517301776","0.416769673493705","7.25833479596884e-05"
+"c(variable, correlation_p$estimate, correlation_p$p.value, correlation_s$estimate, correlation_s$p.value)1","percent_h_l","0.389685340991265","0.000227466403616894","0.529091522432093","1.93252964325979e-07"
+"c(variable, correlation_p$estimate, correlation_p$p.value, correlation_s$estimate, correlation_s$p.value)2","med_income","0.732432174472344","1.6396654463776e-15","0.737438683718773","8.38491777854272e-16"
+"c(variable, correlation_p$estimate, correlation_p$p.value, correlation_s$estimate, correlation_s$p.value)3","percent_blw_pov","0.438225339871162","2.73321864825191e-05","0.555198304167341","3.49826919459442e-08"
+"c(variable, correlation_p$estimate, correlation_p$p.value, correlation_s$estimate, correlation_s$p.value)4","perc_hhs_aid","0.313621610255731","0.00346946207463402","0.310345724735959","0.00384485094194619"

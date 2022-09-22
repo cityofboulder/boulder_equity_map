@@ -36,7 +36,7 @@
 <h3 align="center">City of Boulder Racial Equity Map (WIP)</h3>
 
   <p align="center">
-    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: September 2022)
+    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: October 2022)
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br /> -->
@@ -127,14 +127,6 @@ This project leverages data from the American Community Survey 5-year estimates 
    install.packages("tmaptools")
    install.packages("OpenStreetMap")
    install.packages("data.table")
-   # use type argument if working on Windows operating system
-   # install.packages("devtools", type = "win.binary")
-
-   # Load devtools to install nlcor package
-   # library(devtools)
-
-   # install_github("ProcessMiner/nlcor")
-
    ```
 3. Get free Geocodio API at https://www.geocod.io/docs/#authentication.
 4. Request a Census API key at https://api.census.gov/data/key_signup.html and add it to your environment as follows:
@@ -153,6 +145,13 @@ This project leverages data from the American Community Survey 5-year estimates 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources. -->
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
+
+
+This index is designed to provide an informative (but not predictive) view of racial and economic distributions within Boulder, with higher ranks on the index indicating an area of greater potential need. 
+
+<p align="center"><img src="figures/tidy_figures/Equity Index.png" alt="City of Boulder Racial Equity Map" ></p>
+
+Racial equity is far more complex than this index is able to reflect; as such, it is intended as a starting point. It is meant to highlight racial equity concerns in conjunction with other data layers for project planning and resource allocation. In situations where all other variables are equal, it may be used as a "tie breaker" for decision makers.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -181,9 +180,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 <!-- Don't forget to give the project a star! Thanks again! -->
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -213,9 +212,11 @@ Project Link: [https://github.com/cityofboulder/boulder_equity_map](https://gith
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* Christy Spielman
+* Nicolia Eldred-Skemp
+* Richard Todd
+* Aimee Kane
+* Ana Silvia Avendano-Curiel
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

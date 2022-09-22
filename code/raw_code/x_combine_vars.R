@@ -14,8 +14,9 @@ library(tmap)
 library(tmaptools)
 library(OpenStreetMap)
 library(data.table)
-library(classInt)
+# library(classInt)
 library(nlcor)
+library(BAMMtools)
 
 #########################################
 ##### 1. Read in selected variables #####
@@ -43,10 +44,12 @@ full_df <- merge(acs, hhs_client, by = "GEOID", all.x = TRUE) %>%
 # white is the exact inverse of % POC, so exclude
 full_df <- full_df[,names(full_df) != "white"]
 
+
+
 na_count  <- sapply(full_df, function(y) sum(length(which(is.na(y)))))
 na_count  <-  data.frame(na_count)
 
-
+full_df[is.na(full_df)] <- 0
 
 z <- as.matrix(full_df[3:17])
 cor_plot <- pairs( z, panel=function(x,y){
@@ -150,8 +153,17 @@ for (variable in variables) {
   all_corr_df <- rbind(all_corr_df, data)
 }
 
+temp_df <- full_df[, !names(full_df) %in% c("perc_public_assist",
+                                            "perc_pr_aid",
+                                            "perc_aff_hs_units",
+                                            "percent_post_hs")]
 
-
+z <- as.matrix(temp_df[3:13])
+cor_plot <- pairs( z, panel=function(x,y){
+  points(x,y)
+  abline(lm(y~x), col='blue')
+  text(0.8,0.9,labels = paste('R2=',round((cor(x,y)),2)) ,col='blue' )
+})
 # Limit variables 
 baa_drop_vars <-  c("white",
                 # "black",
@@ -164,8 +176,8 @@ baa_drop_vars <-  c("white",
                 "percent_poc",
                 "perc_aff_hs_units",
                 "perc_pr_aid",
-                "perc_public_assist"
-                # "percent_post_hs"
+                "perc_public_assist",
+                "percent_post_hs"
                 )
 poc_drop_vars <-  c("white",
                "black",
@@ -178,8 +190,8 @@ poc_drop_vars <-  c("white",
                # "percent_poc"
                "perc_aff_hs_units",
                "perc_pr_aid",
-               "perc_public_assist"
-               # "percent_post_hs"
+               "perc_public_assist",
+               "percent_post_hs"
 )
 
 baa_df <- full_df[,!names(full_df) %in% baa_drop_vars]
@@ -214,9 +226,9 @@ for (variable in variables) {
 }
 
 # Calculate correlation for BAA index
-variables <- names(baa_df[3:count_vars])
+variables <- names(baa_df[3:7])
 
-var_df <- baa_df[3:count_vars]
+var_df <- baa_df[3:7]
 # Invert direction of med_income to preserve relationship to combined vars
 var_df$med_income <- factor(var_df$med_income)
 levels(var_df$med_income) <- rev(levels(var_df$med_income))
@@ -263,6 +275,7 @@ for (variable in variables) {
   )
   baa_corr_df <- rbind(baa_corr_df, data)
 }
+write.csv(baa_corr_df, "..//..//data//tidy_data//baa_corr_df.csv")
 
 # Now for the POC index
 variables <- names(poc_df[3:count_vars])
@@ -321,6 +334,8 @@ for (variable in variables) {
   )
   poc_corr_df <- rbind(poc_corr_df, data)
 }
+write.csv(poc_corr_df, "..//..//data//tidy_data//poc_corr_df.csv")
+
 z <- as.matrix(var_df)
 cor_plot <- pairs( z, panel=function(x,y){
   points(x,y)
@@ -353,7 +368,7 @@ raw_values_df$percent_post_hs <- factor(raw_values_df$percent_post_hs)
 levels(raw_values_df$percent_post_hs) <- rev(levels(raw_values_df$percent_post_hs))
 raw_values_df$percent_post_hs <- as.numeric(as.character(raw_values_df$percent_post_hs))
 
-raw_values_df$index <- wtd.rowSums(raw_values_df[,3:8], wts=c(1,2,2,1,1,1))
+raw_values_df$index <- wtd.rowSums(raw_values_df[,3:8], wts=c(0,2,2,1,1,1))
 
 # Get geometry
 geo <- get_acs(
@@ -375,34 +390,72 @@ geo_idx <- st_as_sf(geo_idx,
                     crs=4326
 )
 
-tmap_mode("view")
+#########################################
+########## 5. Index Cleanup #############
+#########################################
 
+ranks <- getJenksBreaks(geo_idx$index, 6)
+
+geo_idx <- geo_idx %>%
+  mutate(INDEX = case_when(index >=ranks[1] & index < ranks[2] ~ 1,
+                             index >=ranks[2] & index < ranks[3] ~ 2,
+                             index >=ranks[3] & index < ranks[4] ~ 3,
+                             index >=ranks[4] & index < ranks[5] ~ 4,
+                             index >=ranks[4] ~ 5
+                             ))
+geo_idx$INDEX <- as.character(geo_idx$INDEX)
+
+tmap_mode("view")
+# tmap_mode("plot")
 # Index map
 tm_basemap("OpenStreetMap.France") +
   tm_shape(geo_idx) + 
-  tm_polygons(col = "index",
-              style = "jenks",
-              n = 5,
-              alpha = 0.8,
+  tm_polygons(col = "INDEX",
+              # style = "jenks",
+              # n = 5,
+              alpha = 0.9,
               palette = "Blues",
               title = "Equity Index") + 
   tm_layout(title = "Index\nby Block Group",
             frame = FALSE,
             legend.outside = TRUE)
 
+
+
+export_file <- geo_idx[,names(geo_idx) %in% c("GEOID",
+                                              "NAME",
+                                              "INDEX")]
+
+export_file <- st_transform(export_file, crs = "EPSG:2876")
+st_crs(export_file)
+
+st_write(
+  export_file,
+  "..//..//data//tidy_data//draft_equity_index.shp",
+  driver="ESRI Shapefile"
+)
+#########################################
+############# 6. Comparisons ############
+#########################################
 # Comparisons
+
+hhs_points <- read.csv("..//..//data//raw_data//hhs_client_points.csv")
+hhs_geo <- st_as_sf(hhs_points, coords=c("Longitude", "Latitude"), crs=4269)
+
 
 tm_basemap("OpenStreetMap.France") +
   tm_shape(geo_idx) + 
   tm_polygons(col = "perc_hhs_aid",
               style = "jenks",
               n = 5,
-              alpha = 0.8,
+              alpha = 0.95,
               palette = "Blues",
               title = "HHS Aid Recipients") + 
   tm_layout(title = "Aid Recipients\nby Block Group",
             frame = FALSE,
-            legend.outside = TRUE)
+            legend.outside = TRUE) +
+  tm_shape(hhs_geo) +
+  tm_dots(alpha=0.9) 
 
 
 # Combine all Race Variables for comparison
