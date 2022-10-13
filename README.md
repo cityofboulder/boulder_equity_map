@@ -36,16 +36,16 @@
 <h3 align="center">City of Boulder Racial Equity Map (WIP)</h3>
 
   <p align="center">
-    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: October 2022)
+    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: November 2022)
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br /> -->
     <br />
     <!-- <a href="https://github.com/github_username/repo_name">View Demo</a> -->
     <!-- · -->
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/cityofboulder/boulder_equity_map/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/cityofboulder/boulder_equity_map/issues">Request Feature</a>
   </p>
 </div>
 
@@ -82,7 +82,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project leverages data from the American Community Survey 5-year estimates (2016-2020) to develop a racial equity index map for the City of Boulder.
+This project leverages data from the American Community Survey 5-year estimates (2016-2020) and point data for aid recipients documented by Housing and Human Services to develop a racial equity index map for the City of Boulder. The index provides a simplified, 5-level ranking of census block groups in Boulder based on a combination of economic and demographic variables.
+
+<!-- * % of block group population that are people of color (POC)
+* % of block group population that are Hispanic/Latino
+* Median income by block group
+* % of block group population living below the poverty line
+* % of block group population receiving financial aid from Housing and Human Services programs.  -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -134,6 +140,7 @@ This project leverages data from the American Community Survey 5-year estimates 
    library(tidycensus)
    census_api_key("YOUR API KEY GOES HERE")
    ```
+5. For privacy reasons, the raw Housing and Human Services client data are not included in this repository. These are not necessary to run the code beyond initial ETL scripts.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -147,7 +154,15 @@ Use this space to show useful examples of how a project can be used. Additional 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 
-This index is designed to provide an informative (but not predictive) view of racial and economic distributions within Boulder, with higher ranks on the index indicating an area of greater potential need. 
+This index is designed to provide an informative (but not predictive) view of racial and economic distributions within Boulder, with higher ranks on the index indicating an area of greater potential need. The index is comprised of the following variables:
+
+* % of the block group population that are people of color ("POC")
+* % of the block group population that are Hispanic/Latino
+* Median income by block group
+* % of the block group population living below the poverty line
+* % of the block group population receiving financial aid through Housing and Human Services ("HHS") aid programs
+
+These variables were combined as a weighted sum, with race and ethnicity variables double-weighted, then broken into 5 ranks using Jenks natural breaks, with a rank of 5 representing areas of highest priority. 
 
 <p align="center"><img src="figures/tidy_figures/Equity Index.png" alt="City of Boulder Racial Equity Map" ></p>
 
@@ -165,7 +180,7 @@ Racial equity is far more complex than this index is able to reflect; as such, i
 - [ ] Feature 3
     - [ ] Nested Feature -->
 
-See the [open issues](https://github.com/cityofboulder/boulder_equity_map/issues) for a full list of proposed features (and known issues).
+<!-- See the [open issues](https://github.com/cityofboulder/boulder_equity_map/issues) for a full list of proposed features (and known issues). -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
