@@ -1,3 +1,12 @@
+#########################################
+#This file combines cleaned, geocoded, normalized index variables,
+#explores their correlation and generates the final index
+#########################################
+
+#########################################
+##### 0. Set up R session #####
+#########################################
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(tidyverse)
@@ -21,10 +30,15 @@ library(BAMMtools)
 ##### 1. Read in selected variables #####
 #########################################
 
+#read in select normalized ACS variables
 acs <- read_csv("..//..//data//tidy_data//normalized_acs_vars.csv")
+#read in [ ]
 hhs_client <- read_csv("..//..//data//tidy_data/normalized_hhs_client_vars.csv")
+#read in [ ]
 hhs_house <- read_csv("..//..//data//tidy_data//normalized_hhs_housing_vars.csv")
+#read in [ ]
 crime <- read_csv("..//..//data//tidy_data//normalized_crime_vars.csv")
+#read in [ ] 
 p_r_client <- read_csv("..//..//data//tidy_data//normalized_PnR_family_data.csv")
 
 
@@ -40,11 +54,11 @@ full_df <- merge(acs, hhs_client, by = "GEOID", all.x = TRUE) %>%
          perc_hhs_aid = perc_hs_aid,
          perc_pr_aid = client_percent,
          perc_public_assist = percent_aid)
+
 # white is the exact inverse of % POC, so exclude
 full_df <- full_df[,names(full_df) != "white"]
 
-
-
+#identify NAs and replace with zeros to aid calculation
 na_count  <- sapply(full_df, function(y) sum(length(which(is.na(y)))))
 na_count  <-  data.frame(na_count)
 
@@ -56,7 +70,6 @@ cor_plot <- pairs( z, panel=function(x,y){
   abline(lm(y~x), col='blue')
   text(0.8,0.9,labels = paste('R2=',round((cor(x,y)),2)) ,col='blue' )
 })
-
 
 
 #########################################
@@ -72,9 +85,7 @@ wtd.rowSums <- function(x, wts=1, na.rm=TRUE) {
   rowSums(t(t(x) * wts), na.rm=na.rm)
 }
 
-
 # Check all variables
-
 variables <- names(full_df[3:17])
 # variables <- names(full_df[3:14])
 var_df <- full_df[3:17]

@@ -1,4 +1,6 @@
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+#########################################
+##### 0. R setup #####
+#########################################
 
 library(tidyverse)
 library(stringr)
@@ -14,10 +16,13 @@ library(rosm)
 # library(tmaptools)
 # library(OpenStreetMap)
 
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 #########################################
-##### 1. Read in selected variables #####
+##### 1. Read in selected ACS variables #####
 #########################################
 
+#work has already been done to select and download ACS data from [here]
 bg_df  <- read_csv("..//..//data//tidy_data//bg-level_candidate_variables_acs5_2020.csv")
 
 bg_df$label <- str_replace_all(bg_df$label, "[^[:alnum:]]", " ")
@@ -28,7 +33,7 @@ bg_df <- bg_df %>%
 bg_list <-  as.list(unique(bg_df$NAME))
 
 # Group variables
-
+# Codebook is avaialble [here] 
 race_var <- c("B02001_001", # Total
               "B02001_002", # White
               "B02001_003", # Black or AA
@@ -96,6 +101,7 @@ race_perc <- race_perc[, names(race_perc) %in% c("GEOID",
 
 #########################################
 # Isolate and adjust ethnicity variables
+#########################################
 
 eth_df <- bg_df[bg_df$variable %in% eth_var,]
 
@@ -119,6 +125,7 @@ eth_perc <- eth_perc[, names(eth_perc) %in% c("GEOID",
 
 #########################################
 # Isolate and adjust education variables
+#########################################
 
 edu_df <- bg_df[bg_df$variable %in% edu_var,]
 
@@ -137,7 +144,6 @@ degree_df <- edu_df %>%
   group_by(GEOID, NAME) %>%
   summarize(degree_count = sum(estimate))
 
-
 edu_perc <- data.frame()
 for (i in bg_list) {
   total <- edu_totals$estimate[edu_totals$NAME == i]
@@ -150,6 +156,7 @@ edu_perc$percent_post_hs[is.na(edu_perc$percent_post_hs)] <- 0
 
 #########################################
 # Isolate and adjust economic variables
+#########################################
 
 # % receiving public assistance income OR food stamps/SNAP
 econ1_df <- bg_df[bg_df$variable %in% econ_var1,]
@@ -175,8 +182,9 @@ aid_perc <- aid_perc[, names(aid_perc) %in% c("GEOID",
                                               "percent_aid"
                                               )
                     ]
-                     
+#########################################
 # % Below Poverty
+#########################################
 
 pov_df <- bg_df[bg_df$variable %in% econ_var2,]
 total_pop_df <- pov_df[pov_df$variable == "C17002_001",]
@@ -252,12 +260,11 @@ full_df$GEOID[is.na(full_df$med_income) == TRUE]
 
 
 # The missing values are in tracts mainly in the university area. Don't want to 
-# set to zero, probably want to mask any effect here. Mean imputation?
+# set to zero, probably want to mask any effect here, so using mean imputation
 norm_acs$med_income[is.na(norm_acs$med_income)] <- mean(norm_acs$med_income, na.rm = TRUE) 
 
 # Normalize columns
 norm_acs[3:15] <- lapply(norm_acs[3:15], function(x) Normalize(x))
-
 
 # Rename columns for clarity
 norm_acs <- norm_acs %>%
@@ -278,7 +285,6 @@ write.csv(norm_acs, "..//..//data//tidy_data//normalized_acs_vars.csv",
 ############################################
 
 pairs(norm_acs[,3:15])
-
 
 z <- as.matrix(norm_acs[3:15])
 pairs( z, panel=function(x,y){

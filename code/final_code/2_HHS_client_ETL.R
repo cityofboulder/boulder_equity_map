@@ -1,3 +1,7 @@
+#########################################
+##### 0. Set up R #####
+#########################################
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(tidyverse)
@@ -14,10 +18,12 @@ library(tmap)
 library(tmaptools)
 library(OpenStreetMap)
 library(data.table)
+
 #########################################
-##### 1. Read in selected variables #####
+##### 1. Read in base data #####
 #########################################
 
+#ACS data is required to normalize client counts
 bg_df  <- read_csv("..//..//data//tidy_data//bg-level_candidate_variables_acs5_2020.csv")
 
 bg_df$label <- str_replace_all(bg_df$label, "[^[:alnum:]]", " ")
@@ -27,10 +33,10 @@ bg_df <- bg_df %>%
 
 bg_list <-  as.list(unique(bg_df$GEOID))
 
+#read HHS data
 df <- read.csv("C://data//HHS//geo_coded_clients_cleaned.csv")
 
 # Filter for food tax rebate, childcare subsidies, and family resource schools
-
 df <- df %>%
   filter(grepl('FTR|CCS|FRS', EXPECM__ALL_ACTIVE_PROGRAMS__C))
 
