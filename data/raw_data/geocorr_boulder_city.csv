@@ -84,3 +84,9 @@ state_code,place_code,county_code,tract,block_group,State_abbr,county_name,place
 8,7850,8013,132.05,1,CO,Boulder CO,"Boulder city, CO",44,0.0004
 8,7850,8013,137.04,3,CO,Boulder CO,"Boulder city, CO",8,0.0001
 8,7850,8013,137.04,4,CO,Boulder CO,"Boulder city, CO",1479,0.0136
+8,7850,8013,126.10,1,CO,Boulder CO,"Boulder city, CO",,
+8,7850,8013,132.05,3,CO,Boulder CO,"Boulder city, CO",,
+8,7850,8013,127.08,1,CO,Boulder CO,"Boulder city, CO",,
+8,7850,8013,127.08,2,CO,Boulder CO,"Boulder city, CO",,
+8,7850,8013,127.09,1,CO,Boulder CO,"Boulder city, CO",,
+8,7850,8013,127.10,1,CO,Boulder CO,"Boulder city, CO",,

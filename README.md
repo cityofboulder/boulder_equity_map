@@ -140,7 +140,19 @@ This project leverages data from the American Community Survey 5-year estimates 
    library(tidycensus)
    census_api_key("YOUR API KEY GOES HERE")
    ```
-5. For privacy reasons, the raw Housing and Human Services client data are not included in this repository. These are not necessary to run the code beyond initial ETL scripts.
+5. For privacy reasons, the raw Parks and Recreation and Housing and Human Services client data are not included in this repository. for reference, the file names are:
+  * <b>pr_financial_aid.csv</b> - Parks and Recreation financial aid records from 2019 (as 2020-21 enrollment may have been suppressed by the COVID-19 pandemic)
+  * <b>HHS Case Records.csv</b> - Housing and Human Services individual enrollment records (2020)
+  * <b>affordable_housing_units_geocoded_cleaned.csv</b> - Housing and Human Services affordable housing units within city limits (2020)
+6. The file <b>geocorr_boulder_city.csv</b>, used in 1_ACS_variable_selection.R to filter for Boulder's Census block groups, was generated via the Missouri Census Data Center's <a href="https://mcdc.missouri.edu/applications/geocorr2022.html">Geographic Correspondence Engine</a> and edited to include block groups for Boulder sub-communities that are not officially annexed by the city.
+
+The repository is organized as follows:
+
+* The <b>data</b> folder contains subfolders for raw input data (except sensitive data mentioned above) and cleaned outputs.
+* The <b>data_preparation</b> folder contains all scripts necessary to convert the raw data to cleaned products. 
+* The <b>EDA</b> folder contains raw, exploratory code that is unnecessary for construction of the index, but may provide further insight into the data used.
+* The <b>index_construction</b> folder contains the script that compiles the data sources into the equity index.
+* The <b>outputs</b> folder contains images, maps, figures, and written products generated for this analysis.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -247,5 +259,5 @@ Project Link: [https://github.com/cityofboulder/boulder_equity_map](https://gith
 <!-- [stars-url]: https://github.com/github_username/repo_name/stargazers -->
 [issues-shield]: https://img.shields.io/github/issues/cityofboulder/boulder_equity_map.svg?style=for-the-badge
 [issues-url]: https://github.com/cityofboulder/boulder_equity_map/issues
-[license-shield]: https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/badge/License-MIT-yellow.svg
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
