@@ -1,3 +1,12 @@
+#########################################
+#This file combines cleaned, geocoded, normalized index variables,
+#explores their correlation and generates the final index
+#########################################
+
+#########################################
+##### 0. Set up R #####
+#########################################
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(tidyverse)
@@ -21,10 +30,15 @@ library(BAMMtools)
 ##### 1. Read in selected variables #####
 #########################################
 
+# Read in select normalized ACS variables
 acs <- read_csv("..//data//tidy_data//normalized_acs_vars.csv")
+# Read in normalized HHS client data
 hhs_client <- read_csv("..//data//tidy_data/normalized_hhs_client_vars.csv")
+# Read in HHS normalized affordable housing data
 hhs_house <- read_csv("..//data//tidy_data//normalized_hhs_housing_vars.csv")
+# Read in normalized crime variables
 crime <- read_csv("..//data//tidy_data//normalized_crime_vars.csv")
+# Read in normalized Parks and Recreation aid recipient data
 p_r_client <- read_csv("..//data//tidy_data//normalized_PnR_family_data.csv")
 
 

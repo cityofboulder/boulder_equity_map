@@ -1,3 +1,7 @@
+#########################################
+##### 0. Set up R #####
+#########################################
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(tidyverse)
@@ -15,9 +19,10 @@ library(tmaptools)
 library(OpenStreetMap)
 library(data.table)
 #########################################
-##### 1. Read in selected variables #####
+##### 1. Read in base data ##############
 #########################################
 
+# ACS data is required to normalize client counts
 bg_df  <- read_csv("..//data//tidy_data//bg-level_candidate_variables_acs5_2020.csv")
 
 bg_df$label <- str_replace_all(bg_df$label, "[^[:alnum:]]", " ")

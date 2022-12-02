@@ -1,3 +1,7 @@
+#########################################
+##### 0. Set up R #####
+#########################################
+
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 library(tidyverse)
@@ -18,6 +22,9 @@ library(rosm)
 ##### 1. Read in selected variables #####
 #########################################
 
+# Work has already been done to select and download ACS data from 
+# https://mcdc.missouri.edu/applications/geocorr2022.html
+# Additional block groups added manually to include un-annexed sub-communities.
 bg_df  <- read_csv("..//data//tidy_data//bg-level_candidate_variables_acs5_2020.csv")
 
 bg_df$label <- str_replace_all(bg_df$label, "[^[:alnum:]]", " ")
@@ -28,7 +35,7 @@ bg_df <- bg_df %>%
 bg_list <-  as.list(unique(bg_df$NAME))
 
 # Group variables
-
+# Code book is available in ../data/raw_data/acs5_variables.xlsx
 race_var <- c("B02001_001", # Total
               "B02001_002", # White
               "B02001_003", # Black or AA
@@ -71,7 +78,11 @@ econ_var2 <- c("C17002_001", # Total pop
 ### 2. Adjust measures by population ###
 ########################################
 
+
+#########################################
 # Isolate and adjust race variables
+#########################################
+
 race_df <- bg_df[bg_df$variable %in% race_var,]
 
 race_perc <- data.frame()
@@ -96,6 +107,7 @@ race_perc <- race_perc[, names(race_perc) %in% c("GEOID",
 
 #########################################
 # Isolate and adjust ethnicity variables
+#########################################
 
 eth_df <- bg_df[bg_df$variable %in% eth_var,]
 
@@ -119,6 +131,7 @@ eth_perc <- eth_perc[, names(eth_perc) %in% c("GEOID",
 
 #########################################
 # Isolate and adjust education variables
+#########################################
 
 edu_df <- bg_df[bg_df$variable %in% edu_var,]
 
@@ -150,6 +163,8 @@ edu_perc$percent_post_hs[is.na(edu_perc$percent_post_hs)] <- 0
 
 #########################################
 # Isolate and adjust economic variables
+#########################################
+
 
 # % receiving public assistance income OR food stamps/SNAP
 econ1_df <- bg_df[bg_df$variable %in% econ_var1,]
@@ -175,8 +190,9 @@ aid_perc <- aid_perc[, names(aid_perc) %in% c("GEOID",
                                               "percent_aid"
                                               )
                     ]
-                     
+#########################################                    
 # % Below Poverty
+#########################################
 
 pov_df <- bg_df[bg_df$variable %in% econ_var2,]
 total_pop_df <- pov_df[pov_df$variable == "C17002_001",]
