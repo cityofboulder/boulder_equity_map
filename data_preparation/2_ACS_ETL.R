@@ -37,7 +37,8 @@ bg_list <-  as.list(unique(bg_df$NAME))
 # Group variables
 # Code book is available in ../data/raw_data/acs5_variables.xlsx
 race_var <- c("B02001_001", # Total
-              "B02001_002", # White
+              "B03002_003", # White alone, not hispanic/latino
+              # "B02001_002", # White
               "B02001_003", # Black or AA
               "B02001_004", # A Indian or AK Native
               "B02001_005", # Asian
@@ -231,7 +232,8 @@ pov_perc <- pov_perc[, names(pov_perc) %in% c("GEOID",
 
 race_wide <- race_perc %>%
   spread(variable, percent) %>%
-  mutate(percent_poc = 100 - B02001_002)
+  # May have to change this to B03002_003 if we remove Hispanic/Latino as a var
+  mutate(percent_bipoc = 100 - B03002_003)
 
 eth_perc <- eth_perc[,names(eth_perc) != "variable"]
 
@@ -277,7 +279,8 @@ norm_acs[3:15] <- lapply(norm_acs[3:15], function(x) Normalize(x))
 
 # Rename columns for clarity
 norm_acs <- norm_acs %>%
-  rename("white" = "B02001_002",
+  rename("white" = "B03002_003",
+         # "white" = "B02001_002",
          "black" = "B02001_003",
          "ai_ak" = "B02001_004",
          "asian" = "B02001_005",

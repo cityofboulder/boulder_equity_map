@@ -168,8 +168,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 This index is designed to provide an informative (but not predictive) view of racial and economic distributions within Boulder, with higher ranks on the index indicating an area of greater potential need. The index is comprised of the following variables:
 
-* % of the block group population that are people of color ("POC")
-* % of the block group population that are Hispanic/Latino
+* % of the block group population that are Black, Indigenous, and People of Color ("BIPOC")
 * Median income by block group
 * % of the block group population living below the poverty line
 * % of the block group population receiving financial aid through Housing and Human Services ("HHS") aid programs

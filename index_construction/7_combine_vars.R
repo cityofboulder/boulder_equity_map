@@ -174,21 +174,21 @@ temp_df <- full_df[, !names(full_df) %in% c("perc_public_assist",
 #   abline(lm(y~x), col='blue')
 #   text(0.8,0.9,labels = paste('R2=',round((cor(x,y)),2)) ,col='blue' )
 # })
-# Limit variables 
-baa_drop_vars <-  c("white",
-                # "black",
-                "ai_ak",
-                "asian",
-                "nh_pi",
-                "other",
-                "2_plus_othr",
-                # "percent_blw_pov",
-                "percent_poc",
-                "perc_aff_hs_units",
-                "perc_pr_aid",
-                "perc_public_assist",
-                "percent_post_hs"
-                )
+# # Limit variables 
+# baa_drop_vars <-  c("white",
+#                 # "black",
+#                 "ai_ak",
+#                 "asian",
+#                 "nh_pi",
+#                 "other",
+#                 "2_plus_othr",
+#                 # "percent_blw_pov",
+#                 "percent_bipoc",
+#                 "perc_aff_hs_units",
+#                 "perc_pr_aid",
+#                 "perc_public_assist",
+#                 "percent_post_hs"
+#                 )
 poc_drop_vars <-  c("white",
                "black",
                "ai_ak",
@@ -204,7 +204,7 @@ poc_drop_vars <-  c("white",
                "percent_post_hs"
 )
 
-baa_df <- full_df[,!names(full_df) %in% baa_drop_vars]
+# baa_df <- full_df[,!names(full_df) %in% baa_drop_vars]
 poc_df <- full_df[,!names(full_df) %in% poc_drop_vars]
 
 count_vars <- length(names(poc_df))
@@ -236,56 +236,56 @@ for (variable in variables) {
 }
 
 # Calculate correlation for BAA index
-variables <- names(baa_df[3:7])
-
-var_df <- baa_df[3:7]
-# Invert direction of med_income to preserve relationship to combined vars
-var_df$med_income <- factor(var_df$med_income)
-levels(var_df$med_income) <- rev(levels(var_df$med_income))
-var_df$med_income <- as.numeric(as.character(var_df$med_income))
-
-baa_corr_df <- data.frame(matrix(ncol=5, nrow = 0))
-
-colnames(baa_corr_df) <- c("variable", 
-                       "Pearson Coef", 
-                       "Pearson P.value",
-                       "Spearman Coef",
-                       "Spearman P.value"
-)
-for (variable in variables) {
-  index_df <- var_df[,names(var_df) != variable]
-  index <- wtd.rowSums(index_df, wts=(1/(length(names(index_df)))))
-  # print(index)
-  test_var <- var_df[,names(var_df) == variable]
-  
-  correlation_p <- cor.test(test_var, index, method = "pearson")
-  correlation_s <- cor.test(test_var, index, method = "spearman")
-  # print(test_var)
-  # print("----------------")
-  reg <- lm(test_var~index)
-  plot(index, 
-       test_var,
-       xlab = "proto-index",
-       ylab = variable)
-  abline(reg)
-  
-  data <- t(as.data.frame(c(variable,
-                            correlation_p$estimate,
-                            correlation_p$p.value,
-                            correlation_s$estimate,
-                            correlation_s$p.value
-                            )
-                          )
-            )
-  colnames(data) <- c("variable", 
-                      "Pearson Coef", 
-                      "Pearson P.value",
-                      "Spearman Coef",
-                      "Spearman P.value"
-  )
-  baa_corr_df <- rbind(baa_corr_df, data)
-}
-write.csv(baa_corr_df, "..//..//data//tidy_data//baa_corr_df.csv")
+# variables <- names(baa_df[3:7])
+# 
+# var_df <- baa_df[3:7]
+# # Invert direction of med_income to preserve relationship to combined vars
+# var_df$med_income <- factor(var_df$med_income)
+# levels(var_df$med_income) <- rev(levels(var_df$med_income))
+# var_df$med_income <- as.numeric(as.character(var_df$med_income))
+# 
+# baa_corr_df <- data.frame(matrix(ncol=5, nrow = 0))
+# 
+# colnames(baa_corr_df) <- c("variable",
+#                        "Pearson Coef",
+#                        "Pearson P.value",
+#                        "Spearman Coef",
+#                        "Spearman P.value"
+# )
+# for (variable in variables) {
+#   index_df <- var_df[,names(var_df) != variable]
+#   index <- wtd.rowSums(index_df, wts=(1/(length(names(index_df)))))
+#   # print(index)
+#   test_var <- var_df[,names(var_df) == variable]
+# 
+#   correlation_p <- cor.test(test_var, index, method = "pearson")
+#   correlation_s <- cor.test(test_var, index, method = "spearman")
+#   # print(test_var)
+#   # print("----------------")
+#   reg <- lm(test_var~index)
+#   plot(index,
+#        test_var,
+#        xlab = "proto-index",
+#        ylab = variable)
+#   abline(reg)
+# 
+#   data <- t(as.data.frame(c(variable,
+#                             correlation_p$estimate,
+#                             correlation_p$p.value,
+#                             correlation_s$estimate,
+#                             correlation_s$p.value
+#                             )
+#                           )
+#             )
+#   colnames(data) <- c("variable",
+#                       "Pearson Coef",
+#                       "Pearson P.value",
+#                       "Spearman Coef",
+#                       "Spearman P.value"
+#   )
+#   baa_corr_df <- rbind(baa_corr_df, data)
+# }
+# write.csv(baa_corr_df, "..//..//data//tidy_data//baa_corr_df.csv")
 
 # Now for the POC index
 variables <- names(poc_df[3:count_vars])
@@ -361,7 +361,7 @@ write.csv(poc_corr_df, "..//data//tidy_data//poc_corr_df.csv")
 raw_values_df <- full_df[, names(full_df) %in% c("GEOID",
                                                  "NAME",
                                                  "percent_post_hs",
-                                                 "percent_poc",
+                                                 "percent_bipoc",
                                                  "percent_h_l",
                                                  "med_income",
                                                  "percent_blw_pov",
@@ -378,7 +378,7 @@ raw_values_df$percent_post_hs <- factor(raw_values_df$percent_post_hs)
 levels(raw_values_df$percent_post_hs) <- rev(levels(raw_values_df$percent_post_hs))
 raw_values_df$percent_post_hs <- as.numeric(as.character(raw_values_df$percent_post_hs))
 
-raw_values_df$index <- wtd.rowSums(raw_values_df[,3:8], wts=c(0,2,2,1,1,1))
+raw_values_df$index <- wtd.rowSums(raw_values_df[,3:8], wts=c(0,2,0,1,1,1))
 
 # Get geometry
 geo <- get_acs(
@@ -441,6 +441,6 @@ st_crs(export_file)
 
 st_write(
   export_file,
-  "..//data//tidy_data//draft_equity_index.shp",
+  "..//data//tidy_data//equity_index.shp",
   driver="ESRI Shapefile"
 )
