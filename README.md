@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/boulder-logo.png" alt="Logo" width="160" height="160">
+    <img src="/outputs/images/boulder-logo.png" alt="Logo" width="160" height="160">
   </a>
 
 <h3 align="center">City of Boulder Racial Equity Map (WIP)</h3>
@@ -175,7 +175,7 @@ This index is designed to provide an informative (but not predictive) view of ra
 
 These variables were combined as a weighted sum, with race and ethnicity variables double-weighted, then broken into 5 ranks using Jenks natural breaks, with a rank of 5 representing areas of highest priority. 
 
-<p align="center"><img src="figures/tidy_figures/Equity Index.png" alt="City of Boulder Racial Equity Map" ></p>
+<p align="center"><img src="outputs/figures/tidy_figures/Equity Index.png" alt="City of Boulder Racial Equity Map" ></p>
 
 Racial equity is far more complex than this index is able to reflect; as such, it is intended as a starting point. It is meant to highlight racial equity concerns in conjunction with other data layers for project planning and resource allocation. In situations where all other variables are equal, it may be used as a "tie breaker" for decision makers.
 
