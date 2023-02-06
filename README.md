@@ -33,10 +33,10 @@
     <img src="/outputs/images/boulder-logo.png" alt="Logo" width="160" height="160">
   </a>
 
-<h3 align="center">City of Boulder Racial Equity Map (WIP)</h3>
+<h3 align="center">City of Boulder Racial Equity Map</h3>
 
   <p align="center">
-    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups. (Target completion date: November 2022)
+    A map combining variables from the American Community Survey 5-year estimates (2016-2020) with city data to investigate demographic and economic differences across census block groups.
     <br />
     <!-- <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br /> -->
